@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}<h2><b>Pets-A-Schedule</b></h2>{% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+        {% if next %}
+            {% if user.is_authenticated %}
+                <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+            {% else %}
+                <p>Please login to see this page.</p>
+            {% endif %}
+        {% endif %}
+
+        <form class="form-signin" method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+    
+        <label for="id_username">Username</label>
+        <input class="form-control" type="text" name="username" id="id_username" required autofocus>
+        
+        <label for="id_password">Password</label>
+        <input class="form-control" type="password" name="password" id="id_password" required>
+
+        <div class="checkbox mb-3">
+            <label>
+            <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+
+        <button class="btn btn-lg btn-info btn-block" type="submit">Sign in</button>
+        <center><p class="mt-5 mb-3 text-muted">&copy; Pets-A-Schedule 2020</p></center>
+    </form>
+    </div>
+</div>
+{% endblock %}

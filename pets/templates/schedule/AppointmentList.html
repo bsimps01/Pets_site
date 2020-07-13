@@ -1,0 +1,24 @@
+{% extends "base.html" %} 
+{% block content %}
+<center>
+{% if request.user.is_authenticated %}
+<a href="{% url 'pet-create-page' %}" class="btn btn-success">Add your Pet</a><br>
+<p>Add your pet before scheduling your appointment</p>
+    <a href="{% url 'calendar-create' %}" class="btn btn-success">Create Appointment</a>
+{% endif %}
+</center>
+<ul style="margin-top: 25px">
+    {% for appointment in appointments %}
+    <li>
+        <b>Pet:</b>
+            <a href="{% url 'pet-detail-page' appointment.pet.id %}">{{appointment.pet}}</a>
+            <br>
+        <b>Date:</b>
+        {{appointment.date_of_appointment}}
+        <br/>
+        <b>Duration:</b>
+        {{appointment.duration_minutes}} minutes<br>
+    </li>
+</ul>
+{% endfor %}
+{% endblock %}
