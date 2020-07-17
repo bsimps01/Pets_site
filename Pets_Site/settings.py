@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import dotenv
+
+dotenv.load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -25,7 +27,7 @@ SECRET_KEY = '$-rc#k_)xhayyhm+#1-2l_!r2%vhv#6-=j@e5xtafvjm)w6htn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['0.0.0.0', 'bjamin.tech']
 
 
 # Application definition
@@ -78,10 +80,15 @@ WSGI_APPLICATION = 'Pets_Site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
+
+        'NAME': os.getenv('POSTGRES_DB'),
+
+        'USER': os.getenv('POSTGRES_USER'),
+
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        
+        'HOST': os.getenv('POSTGRES_HOST'),
+
         'PORT': 5432,
     }
 }

@@ -1,16 +1,34 @@
-version: "3.7"
+version: '3.7'
 
 services:
-  db:
+  postgres:
     image: postgres
+    restart: always
+    container_name: postgres
+    ports: 
+        - "5432:5432"
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    volumes: 
+        - ./.postgres:/var/lib/postgresql/data
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app
+    command:
+      [
+      './wait-for-it.sh',
+      'postgres:5432',
+      '--',
+      'sh',
+      'entrypoint.sh',
+      ]
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      - postgres
+
+volumes: 
+    data:
